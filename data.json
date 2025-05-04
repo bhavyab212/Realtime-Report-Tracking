@@ -1,0 +1,49 @@
+{
+    "citizens": [
+        {
+            "username": "krishna",
+            "email": "1@test.com",
+            "password": "123456",
+            "role": "citizen",
+            "createdAt": "2023-10-28T12:00:00Z"
+        },
+        {
+            "username": "Bhavya",
+            "email": "2@test.com",
+            "password": "123456",
+            "role": "citizen",
+            "createdAt": "2023-10-28T12:05:00Z"
+        },
+        {
+            "username": "Disha",
+            "email": "3@test.com",
+            "password": "123456",
+            "role": "citizen",
+            "createdAt": "2023-10-28T12:05:00Z"
+        },
+        {
+            "username": "Pranjal",
+            "email": "4@test.com",
+            "password": "123456",
+            "role": "citizen",
+            "createdAt": "2023-10-28T12:05:00Z"
+        },
+        {
+            "username": "Jagriti",
+            "email": "5@test.com",
+            "password": "123456",
+            "role": "citizen",
+            "createdAt": "2023-10-28T12:05:00Z"
+        }
+    ],
+    "admins": [
+        {
+            "username": "admin_1",
+            "password": "MDUUIET"
+        },
+        {
+            "username": "root_admin",
+            "password": "complex_admin_password"
+        }
+    ]
+}

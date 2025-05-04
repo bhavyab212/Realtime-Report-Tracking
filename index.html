@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modern Dual-User Login System</title>
+    <!-- Boxicons CDN -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container"> <!-- Add ID for easier JS selection -->
+
+        <!-- User Type Selector -->
+        <div class="user-type-selector">
+            <div class="user-type active" data-type="citizen">Citizen</div>
+            <div class="user-type" data-type="admin">Admin</div>
+        </div>
+
+        <!-- Bubble Animation -->
+        <div class="bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+
+        <!-- Forms Panel -->
+        <div class="forms-panel">
+            <!-- Citizen Login -->
+            <div class="form-box citizen-login active"> <!-- Start with citizen login active -->
+                <div class="form-content">
+                    <h2>Citizen Login</h2>
+                    <form id="citizen-login-form" onsubmit="return false;"> <!-- Prevent default submission -->
+                        <div class="input-box">
+                            <input type="text" id="citizen-login-username" required autocomplete="username">
+                            <label for="citizen-login-username">Username</label>
+                            <i class='bx bxs-user'></i>
+                        </div>
+                        <div class="input-box">
+                            <input type="password" id="citizen-login-password" required autocomplete="current-password">
+                            <label for="citizen-login-password">Password</label>
+                            <i class='bx bxs-lock-alt'></i>
+                        </div>
+                        <!-- Loading Spinner for Citizen Login -->
+                        <div class="loading-spinner" id="citizen-login-spinner"></div>
+                        <button type="button" class="btn" id="citizen-login-btn">Login</button>
+                        <div class="message-area"> <!-- Container for messages -->
+                            <div class="success-message" id="citizen-login-success">Login successful! Redirecting...
+                            </div>
+                            <div class="error-message" id="citizen-login-error">Invalid username or password</div>
+                        </div>
+                        <div class="switch-link">
+                            <p>Don't have an account? <a href="#" class="citizen-register-link">Sign Up</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Citizen Register -->
+            <div class="form-box citizen-register">
+                <div class="form-content">
+                    <h2>Citizen Registration</h2>
+                    <form id="citizen-register-form" onsubmit="return false;"> <!-- Prevent default submission -->
+                        <div class="input-box">
+                            <input type="text" id="citizen-register-username" required autocomplete="username">
+                            <label for="citizen-register-username">Username</label>
+                            <i class='bx bxs-user'></i>
+                        </div>
+                        <div class="input-box">
+                            <input type="email" id="citizen-register-email" required autocomplete="email">
+                            <label for="citizen-register-email">Email</label>
+                            <i class='bx bxs-envelope'></i>
+                        </div>
+                        <div class="input-box">
+                            <input type="password" id="citizen-register-password" required autocomplete="new-password">
+                            <label for="citizen-register-password">Password</label>
+                            <i class='bx bxs-lock-alt'></i>
+                        </div>
+                        <div class="terms">
+                            <label><input type="checkbox" id="citizen-register-terms" required> I agree to the terms &
+                                conditions</label>
+                        </div>
+                        <button type="button" class="btn" id="citizen-register-btn">Sign Up</button>
+                        <div class="message-area"> <!-- Container for messages -->
+                            <div class="success-message" id="citizen-register-success">Registration successful!</div>
+                            <div class="error-message" id="citizen-register-error">Registration failed. Try again.</div>
+                        </div>
+                        <div class="switch-link">
+                            <p>Already have an account? <a href="#" class="citizen-login-link">Login</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Admin Login -->
+            <div class="form-box admin-login">
+                <div class="form-content">
+                    <h2>Admin Access</h2>
+                    <form id="admin-login-form" onsubmit="return false;"> <!-- Prevent default submission -->
+                        <div class="input-box">
+                            <input type="text" id="admin-login-username" required autocomplete="username">
+                            <label for="admin-login-username">Admin ID</label>
+                            <i class='bx bxs-user-badge'></i>
+                        </div>
+                        <div class="input-box">
+                            <input type="password" id="admin-login-password" required autocomplete="current-password">
+                            <label for="admin-login-password">Password</label>
+                            <i class='bx bxs-lock-alt'></i>
+                        </div>
+                        <!-- Loading Spinner for Admin Login -->
+                        <div class="loading-spinner" id="admin-login-spinner"></div>
+                        <button type="button" class="btn" id="admin-login-btn">Access System</button>
+                        <div class="message-area"> <!-- Container for messages -->
+                            <div class="success-message" id="admin-login-success">Admin login successful! Redirecting...
+                            </div>
+                            <div class="error-message" id="admin-login-error">Invalid admin credentials</div>
+                        </div>
+                        <div class="switch-link">
+                            <p>Admin accounts are created by system administrators.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="info-text citizen-login active"> <!-- Start with citizen login active -->
+                <h2>WELCOME BACK!</h2>
+                <p>Log in to access your citizen portal.</p>
+                <i class='bx bx-user-circle welcome-icon'></i>
+            </div>
+            <div class="info-text citizen-register">
+                <h2>JOIN US!</h2>
+                <p>Create an account to enjoy our services.</p>
+                <i class='bx bx-user-plus welcome-icon'></i>
+            </div>
+            <div class="info-text admin-login">
+                <h2>ADMIN PORTAL</h2>
+                <p>Authorized personnel only. Please authenticate.</p>
+                <i class='bx bx-shield-quarter welcome-icon'></i>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

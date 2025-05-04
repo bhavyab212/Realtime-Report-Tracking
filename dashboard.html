@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Expanded Categories</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body class=""> <!-- JS adds sidebar-open for mobile toggle -->
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class='bx bxs-dashboard logo-icon'></i>
+                <span class="logo-text">MyDashboard</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <!-- Basic Links with data-target -->
+                    <li><a href="#" class="nav-link active" data-target="view-dashboard"><i
+                                class='bx bxs-grid-alt'></i><span>Dashboard</span></a></li>
+                    <li><a href="#" class="nav-link" data-target="view-reports"><i class='bx bxs-report'></i><span>My
+                                Reports</span></a></li>
+                    <li><a href="#" class="nav-link" data-target="view-progress"><i
+                                class='bx bx-line-chart'></i><span>Progress</span></a></li>
+                    <li><a href="#" class="nav-link" data-target="view-settings"><i
+                                class='bx bxs-cog'></i><span>Settings</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class='bx bxs-user-circle user-icon'></i>
+                    <span id="username-display">User Name</span>
+                </div>
+                <a href="index.html" id="logout-button" class="logout-link" title="Logout">
+                    <i class='bx bx-log-out'></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1 id="main-content-title">Dashboard Overview</h1>
+                <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+                    <i class='bx bx-menu'></i>
+                </button>
+            </header>
+
+            <!-- Container for all switchable views -->
+            <div class="view-container">
+
+                <!-- View 1: Dashboard -->
+                <div id="view-dashboard" class="view active-view">
+                    <section class="report-cta">
+                        <button id="report-issue-btn" class="btn-report">
+                            <i class='bx bxs-error-alt'></i> Report a New Issue
+                        </button>
+                    </section>
+                    <section class="dashboard-widgets">
+                        <!-- Row 1: KPI -->
+                        <div class="widget-row">
+                            <div class="widget kpi-widget">
+                                <div class="kpi-icon"><i class='bx bx-check-circle'></i></div>
+                                <div class="kpi-content"> <span class="kpi-value" id="stat-tasks-completed">0</span>
+                                    <span class="kpi-label">Reports Closed</span>
+                                </div>
+                            </div>
+                            <div class="widget kpi-widget">
+                                <div class="kpi-icon"><i class='bx bx-loader-circle'></i></div>
+                                <div class="kpi-content"> <span class="kpi-value" id="stat-pending-requests">0</span>
+                                    <span class="kpi-label">Pending Reports</span>
+                                </div>
+                            </div>
+                            <div class="widget kpi-widget">
+                                <div class="kpi-icon"><i class='bx bx-message-rounded-dots'></i></div>
+                                <div class="kpi-content"> <span class="kpi-value" id="stat-unread-messages">0</span>
+                                    <span class="kpi-label">Updates</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Row 2: Progress & Chart -->
+                        <div class="widget-row">
+                            <div class="widget progress-widget">
+                                <h3>Overall Report Progress</h3>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" id="stat-overall-progress" style="width: 0%;">0%</div>
+                                </div>
+                                <p>Based on pending vs closed reports.</p>
+                            </div>
+                            <div class="widget chart-widget">
+                                <h3>Recent Activity (Placeholder)</h3>
+                                <div class="chart-placeholder"> <canvas id="activityChart"></canvas> </div>
+                            </div>
+                        </div>
+                        <!-- Row 3: Recent Reports Table -->
+                        <div class="widget-row">
+                            <div class="widget table-widget">
+                                <h3>My Recent Reports</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-reports-tbody">
+                                        <tr>
+                                            <td colspan="4">Loading...</td>
+                                        </tr>
+                                    </tbody>
+                                </table> <a href="#" class="view-all-reports-link nav-link"
+                                    data-target="view-reports">View All Reports →</a>
+                            </div>
+                        </div>
+                    </section>
+                </div><!-- /#view-dashboard -->
+
+                <!-- View 2: Reports List -->
+                <div id="view-reports" class="view">
+                    <h2>My Reports History</h2>
+                    <p>All your submitted reports are listed below. Click for details.</p>
+                    <div class="report-list-container" id="report-list-container">
+                        <p>Loading reports...</p>
+                    </div>
+                </div><!-- /#view-reports -->
+
+                <!-- View 3: Progress -->
+                <div id="view-progress" class="view">
+                    <h2>Progress Overview</h2>
+                    <p>Visualize the status and types of your submitted reports.</p>
+                    <div id="progress-view-content" class="dashboard-widgets">
+                        <p>Loading progress data...</p>
+                    </div>
+                </div><!-- /#view-progress -->
+
+                <!-- View 4: Settings -->
+                <div id="view-settings" class="view">
+                    <h2>Settings</h2>
+                    <p>Manage your account preferences.</p>
+                    <div class="widget">
+                        <h3>Profile Information</h3>
+                        <p>Username: <strong id="settings-username">User</strong></p> <button
+                            class="btn-secondary disabled" title="Feature not available">Change Password</button>
+                    </div>
+                    <div class="widget">
+                        <h3>Local Data Management</h3>
+                        <p>Reports and statistics are stored locally in this browser.</p> <button class="btn-danger"
+                            id="clear-local-storage-btn">Clear My Reports & Stats</button>
+                    </div>
+                </div><!-- /#view-settings -->
+
+                <!-- View 5: Report Issue -->
+                <div id="view-report-issue" class="view report-issue-view">
+                    <button class="back-to-dash-btn" id="back-to-dash-btn" title="Back to Dashboard"><i
+                            class='bx bx-arrow-back'></i> Back</button>
+                    <h2 id="report-step-title">Report New Issue: Select Category</h2>
+                    <div class="report-steps-container">
+                        <!-- Step 1: Category -->
+                        <div id="report-step-1" class="report-step active-step">
+                            <p class="step-instruction"><i class='bx bx-category-alt'></i> Choose the category related
+                                to your problem:</p>
+                            <div class="category-selection">
+                                <!-- Level 1 Grid -->
+                                <div class="category-grid main-categories active-category-level">
+                                    <!-- Note: data-subsubcategories is added where level 3 exists -->
+                                    <button class="category-card" data-category="Infrastructure"
+                                        data-subcategories='{"Roads & Streets": {"Potholes": [], "Cracked Pavement": [], "Faded Markings": [], "Street Cleaning":[]}, "Sidewalks": ["Cracked", "Uneven", "Obstruction"], "Streetlights": ["Outage", "Flickering", "Damaged Pole"], "Drainage": ["Blocked Drain", "Flooding", "Culvert Issue"], "Public Buildings": ["Maintenance Needed", "Accessibility Issue", "Damage Report"]}'
+                                        style="--card-color: #3498db;"><i
+                                            class='bx bxs-buildings'></i><span>Infrastructure</span></button>
+                                    <button class="category-card" data-category="Public Services"
+                                        data-subcategories='{"Waste Management": ["Missed Collection (Trash)", "Missed Collection (Recycling)", "Missed Collection (Yard Waste)", "Overflowing Bin", "Damaged Bin"], "Permits & Licenses": ["Application Query", "Status Check", "Renewal Issue"], "Public Transport": ["Bus Stop Issue", "Bus Route Query", "Vehicle Condition", "Schedule Info"], "Water Supply": ["Leak", "Low Pressure", "Quality Concern", "Billing Issue"]}'
+                                        style="--card-color: #2ecc71;"><i
+                                            class='bx bxs-cog'></i><span>Services</span></button>
+                                    <button class="category-card" data-category="Environment"
+                                        data-subcategories='{"Illegal Dumping": ["Location Report", "Vehicle Info"], "Pollution": {"Air Quality": [], "Water Contamination": [], "Land Pollution": []}, "Parks & Recreation": ["Damaged Equipment", "Maintenance Request", "Trail Issue", "Reservation Query"], "Tree Maintenance": ["Fallen Tree/Branch", "Diseased Tree", "Trimming Request (Public Property)"], "Noise Complaint": ["Construction Noise", "Neighbor Noise", "Vehicle Noise", "Business Noise"]}'
+                                        style="--card-color: #1abc9c;"><i
+                                            class='bx bxs-tree'></i><span>Environment</span></button>
+                                    <button class="category-card" data-category="Safety & Security"
+                                        data-subcategories='{"Damaged Signage": ["Stop Sign", "Street Name", "Warning Sign", "Other Sign"], "Traffic Signals": ["Signal Out", "Timing Issue", "Damaged Light"], "Vandalism": ["Graffiti", "Property Damage"], "Abandoned Vehicle": ["Location Report", "Description"], "Public Safety Concern": ["Suspicious Activity", "Hazard Report", "Poor Lighting Area"]}'
+                                        style="--card-color: #e74c3c;"><i
+                                            class='bx bxs-shield-alt-2'></i><span>Safety</span></button>
+                                    <button class="category-card" data-category="Utility Issues"
+                                        data-subcategories='{"Power": ["Outage Report", "Flickering Lights", "Downed Line", "Tree Near Line"], "Water": ["Leak (Public Side)", "Leak (Suspected Private)", "Discoloration", "Taste/Odor"], "Gas": ["Suspected Leak (Odor)", "Meter Issue"], "Internet/Cable": ["Service Outage Area", "Damaged Wires/Box"]}'
+                                        style="--card-color: #f39c12;"><i
+                                            class='bx bx-broadcast'></i><span>Utilities</span></button>
+                                    <button class="category-card" data-category="Animal Control"
+                                        data-subcategories='{"Stray Animal": ["Dog", "Cat", "Other Domestic"], "Wildlife Issue": ["Nuisance Animal", "Injured Animal", "Dead Animal Removal"], "Animal Welfare": ["Abuse/Neglect Report", "Barking Dog"]}'
+                                        style="--card-color: #e67e22;"><i
+                                            class='bx bxs-dog'></i><span>Animals</span></button>
+                                    <button class="category-card" data-category="Housing & Property"
+                                        data-subcategories='{"Code Violation": ["Neglected Property", "Zoning Issue", "Unsafe Structure", "Illegal Construction"], "Rental Concern": ["Landlord/Tenant Issue", "Lease Question"], "Public Housing": ["Maintenance Request", "Application Status"]}'
+                                        style="--card-color: #8e44ad;"><i
+                                            class='bx bxs-home-alt-2'></i><span>Housing</span></button>
+                                    <button class="category-card" data-category="Community Event"
+                                        data-subcategories='{"Issue at Event": [], "Feedback on Event": [], "Suggest Event": []}'
+                                        style="--card-color: #34495e;"><i
+                                            class='bx bxs-calendar-event'></i><span>Events</span></button>
+                                    <button class="category-card" data-category="Accessibility"
+                                        data-subcategories='{"Building Access Issue": [], "Sidewalk/Curb Access": [], "Website/Digital Access": [], "Public Transport Access": []}'
+                                        style="--card-color: #2980b9;"><i
+                                            class='bx bx-universal-access'></i><span>Accessibility</span></button>
+                                    <button class="category-card" data-category="Other Issue" data-subcategories='{}'
+                                        style="--card-color: #7f8c8d;"><i
+                                            class='bx bx-dots-horizontal-rounded'></i><span>Other</span></button>
+                                </div>
+                                <!-- Level 2 Grid -->
+                                <div class="category-grid sub-categories level-2" style="display: none;"></div>
+                                <!-- Level 3 Grid -->
+                                <div class="category-grid sub-categories level-3" style="display: none;"></div>
+                            </div>
+                        </div><!-- /#report-step-1 -->
+
+                        <!-- Step 2: Details -->
+                        <div id="report-step-2" class="report-step">
+                            <button class="step-back-btn" data-target-step="1"><i class='bx bx-chevron-left'></i>
+                                Back</button>
+                            <p class="step-instruction"><i class='bx bx-detail'></i> Provide details for: <strong
+                                    id="selected-category-display">Category</strong></p>
+                            <form id="report-details-form" class="report-form" onsubmit="return false;">
+                                <div class="form-row">
+                                    <div class="form-group half-width"> <label for="issue-title"><i
+                                                class='bx bx-heading'></i> Title <small>(Suggestion
+                                                below)</small></label> <input type="text" id="issue-title"
+                                            name="issue-title" required placeholder="Brief title of the issue"> </div>
+                                    <div class="form-group half-width"> <label for="issue-priority"><i
+                                                class='bx bx-error-circle'></i> Priority</label> <select
+                                            id="issue-priority" name="issue-priority">
+                                            <option value="low">Low</option>
+                                            <option value="medium" selected>Medium</option>
+                                            <option value="high">High</option>
+                                        </select> </div>
+                                </div>
+                                <div class="form-group full-width"> <label for="issue-description"><i
+                                            class='bx bx-comment-detail'></i> Description</label> <textarea
+                                        id="issue-description" name="issue-description" rows="4" required
+                                        placeholder="Describe the issue clearly..."></textarea> </div>
+                                <div class="form-row">
+                                    <div class="form-group half-width file-upload-group"> <label
+                                            id="issue-files-label"><i class='bx bx-cloud-upload'></i> Attachments
+                                            (Optional)</label> <label class="file-input-wrapper btn-secondary"
+                                            for="issue-files"> <i class='bx bx-paperclip'></i> Choose Files </label>
+                                        <input type="file" id="issue-files" name="issue-files[]" multiple
+                                            accept="image/*,video/*" aria-labelledby="issue-files-label">
+                                        <div id="file-preview-list" class="file-preview">No files selected.</div>
+                                    </div>
+                                    <div class="form-group half-width location-group"> <label><i
+                                                class='bx bx-map-pin'></i> Location</label>
+                                        <div class="location-controls"> <button type="button" id="get-location-btn"
+                                                class="btn-secondary"><i class='bx bx-current-location'></i> Get
+                                                Current</button> <span id="location-status"
+                                                class="location-feedback"></span> </div>
+                                        <div class="coordinates-display"> Lat: <span id="latitude-display">-</span> Lon:
+                                            <span id="longitude-display">-</span> <input type="hidden"
+                                                id="latitude-input" name="latitude"> <input type="hidden"
+                                                id="longitude-input" name="longitude">
+                                        </div> <input type="text" id="location-address" name="address"
+                                            placeholder="Or type address/landmark">
+                                    </div>
+                                </div>
+                                <div class="submit-area"> <button type="submit" class="btn-submit-report"> <i
+                                            class='bx bxs-paper-plane'></i> Submit Report</button>
+                                    <div id="report-submit-feedback" class="message-area"></div>
+                                </div>
+                            </form>
+                        </div><!-- /#report-step-2 -->
+                    </div> <!-- /.report-steps-container -->
+                </div><!-- /#view-report-issue -->
+
+                <!-- View 6: Report Detail -->
+                <div id="view-report-detail" class="view report-detail-view">
+                    <button class="back-to-reports-btn" id="back-to-reports-btn"><i class='bx bx-list-ul'></i> Back to
+                        Reports List</button>
+                    <div id="report-detail-content">
+                        <p>Loading report details...</p>
+                    </div>
+                </div><!-- /#view-report-detail -->
+
+            </div> <!-- /.view-container -->
+        </main>
+    </div> <!-- /.dashboard-layout -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,702 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Define variables for easier theme changes */
+:root {
+    --primary-color: #533483;
+    --secondary-color: #706fd3;
+    --dark-bg-start: #16213e;
+    --dark-bg-mid1: #1a1a2e;
+    --dark-bg-mid2: #0f3460;
+    --dark-bg-end: #533483;
+    /* Matches primary */
+    --light-text: #f0f0f0;
+    --dark-text: #333;
+    --accent-text: #533483;
+    --light-bg: rgba(255, 255, 255, 0.99);
+    --panel-bg-light: rgba(255, 255, 255, 0.04);
+    --panel-bg-dark: rgba(0, 0, 0, 0.2);
+    --input-border: #ccc;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --disabled-color: #aaa;
+    --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--dark-bg-start), var(--dark-bg-mid1), var(--dark-bg-mid2), var(--dark-bg-end));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    overflow: hidden;
+    /* Essential for clipping */
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+/* --- User Type Selector --- */
+.user-type-selector {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 5px;
+    z-index: 100;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.user-type {
+    padding: 12px 30px;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all .3s;
+}
+
+.user-type.active {
+    background: #fff;
+    color: var(--accent-text);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Bubbles --- */
+.bubbles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bubble {
+    position: absolute;
+    bottom: -150px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: rise 15s infinite ease-in;
+    will-change: transform, bottom;
+}
+
+.bubble:nth-child(1) {
+    width: 40px;
+    height: 40px;
+    left: 10%;
+    animation-duration: 12s;
+}
+
+.bubble:nth-child(2) {
+    width: 20px;
+    height: 20px;
+    left: 20%;
+    animation-duration: 8s;
+    animation-delay: 1s;
+}
+
+.bubble:nth-child(3) {
+    width: 50px;
+    height: 50px;
+    left: 35%;
+    animation-duration: 10s;
+    animation-delay: 2s;
+}
+
+.bubble:nth-child(4) {
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    animation-duration: 15s;
+}
+
+.bubble:nth-child(5) {
+    width: 35px;
+    height: 35px;
+    left: 55%;
+    animation-duration: 9s;
+    animation-delay: 1s;
+}
+
+.bubble:nth-child(6) {
+    width: 45px;
+    height: 45px;
+    left: 65%;
+    animation-duration: 11s;
+    animation-delay: 3s;
+}
+
+.bubble:nth-child(7) {
+    width: 25px;
+    height: 25px;
+    left: 75%;
+    animation-duration: 10s;
+    animation-delay: 2s;
+}
+
+.bubble:nth-child(8) {
+    width: 60px;
+    height: 60px;
+    left: 85%;
+    animation-duration: 13s;
+    animation-delay: 1s;
+}
+
+@keyframes rise {
+    0% {
+        bottom: -150px;
+        transform: translateX(0);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translateX(100px) scale(1.1);
+        opacity: 0.4;
+    }
+
+    100% {
+        bottom: 105vh;
+        transform: translateX(-150px) scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* --- Panels (Sliding Logic) --- */
+.forms-panel,
+.info-panel {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    will-change: transform;
+}
+
+.forms-panel {
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--panel-bg-light);
+    z-index: 10;
+}
+
+.info-panel {
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    color: #fff;
+    background: var(--panel-bg-dark);
+    z-index: 12;
+}
+
+/* --- Form Box & Info Text (Content Sliding/Fading Logic) --- */
+.form-box,
+.info-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* Separate transitions for better control */
+    transition: opacity 0.5s ease-in-out, transform 0.6s ease-in-out, visibility 0s 0.5s;
+    transform: translateX(30px);
+    /* Start slightly offset */
+    will-change: opacity, transform;
+}
+
+.form-box {
+    padding: 20px;
+}
+
+.info-text {
+    flex-direction: column;
+    padding: 50px;
+}
+
+/* Correct transform for elements starting hidden but needing to slide FROM the other direction */
+.form-box.citizen-register {
+    transform: translateX(30px);
+    /* Start from right for forms panel */
+}
+
+.info-text.citizen-register {
+    transform: translateX(-30px);
+    /* Start from left for info panel */
+}
+
+.form-box.admin-login {
+    transform: translateX(30px);
+}
+
+.info-text.admin-login {
+    transform: translateX(-30px);
+}
+
+
+.form-box.active,
+.info-text.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition-delay: 0.2s;
+    /* Delay appearance slightly */
+}
+
+/* Form Content Container */
+.form-content {
+    width: 100%;
+    max-width: 380px;
+    padding: 30px;
+    background: var(--light-bg);
+    border-radius: 10px;
+    box-shadow: 0 5px 25px var(--shadow-color);
+    text-align: center;
+}
+
+.form-content h2 {
+    font-size: 2.2em;
+    color: var(--dark-bg-mid1);
+    margin-bottom: 20px;
+}
+
+/* --- Input Fields --- */
+.input-box {
+    position: relative;
+    width: 100%;
+    margin: 25px 0;
+    border-bottom: 2px solid var(--input-border);
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    padding: 8px 40px 8px 5px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1em;
+    color: var(--dark-text);
+    font-weight: 500;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #555;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+.input-box input:focus+label,
+.input-box input:valid+label {
+    top: -5px;
+    font-size: .8em;
+    color: var(--accent-text);
+}
+
+.input-box i {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    transition: color .3s;
+}
+
+.input-box input:focus~i {
+    color: var(--accent-text);
+}
+
+/* --- Buttons, Links, Messages --- */
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(83, 52, 131, 0.4);
+    transition: all .3s;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(83, 52, 131, 0.5);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(83, 52, 131, 0.4);
+}
+
+.btn:disabled {
+    background: var(--disabled-color);
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.switch-link {
+    margin-top: 20px;
+    font-size: .95em;
+    color: #555;
+}
+
+.switch-link a {
+    color: var(--accent-text);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+.terms {
+    width: 100%;
+    text-align: left;
+    font-size: .9em;
+    color: #555;
+    margin: 15px 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.terms label input {
+    accent-color: var(--primary-color);
+    margin-right: 5px;
+    transform: translateY(1px);
+}
+
+.terms label {
+    cursor: pointer;
+}
+
+/* Message Area to contain spinner and messages */
+.message-area {
+    min-height: 45px;
+    /* Reserve space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.success-message,
+.error-message {
+    display: none;
+    /* Hidden initially */
+    width: 100%;
+    font-weight: 500;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.success-message {
+    color: var(--success-color);
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.error-message {
+    color: var(--error-color);
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+
+/* --- Info Text Content --- */
+.info-text h2 {
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+
+.info-text p {
+    font-size: 1.1em;
+    max-width: 85%;
+    line-height: 1.6;
+    color: var(--light-text);
+    margin-bottom: 20px;
+}
+
+.welcome-icon {
+    font-size: 5em;
+    margin-top: 15px;
+    opacity: 0.6;
+}
+
+/* --- LOADING SPINNER --- */
+.loading-spinner {
+    width: 25px;
+    height: 25px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    display: none;
+    /* Hidden by default */
+    margin: 0 auto;
+    /* Centered within its container (.message-area) */
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ======================================================= */
+/* === SLIDING ANIMATION LOGIC (.container.active) === */
+/* ======================================================= */
+/* This state is ONLY for the Citizen Login -> Citizen Register slide */
+.container.active .forms-panel {
+    transform: translateX(100%);
+}
+
+.container.active .info-panel {
+    transform: translateX(-100%);
+}
+
+/* Content transitions when sliding (Citizen Login -> Register) */
+.container.active .form-box.citizen-login {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-30px);
+    transition-delay: 0s;
+    pointer-events: none;
+}
+
+.container.active .form-box.citizen-register {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+    pointer-events: auto;
+}
+
+.container.active .form-box.admin-login {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Keep admin hidden */
+
+.container.active .info-text.citizen-login {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(30px);
+    transition-delay: 0s;
+}
+
+.container.active .info-text.citizen-register {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+}
+
+.container.active .info-text.admin-login {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Keep admin hidden */
+
+
+/* ============================================ */
+/* === RESPONSIVE (Mobile Stacked Layout) === */
+/* ============================================ */
+@media (max-width: 992px) {
+
+    /* Optional: Adjust padding etc. for tablets */
+    .form-content {
+        max-width: 340px;
+        padding: 25px;
+    }
+
+    .info-panel {
+        padding: 40px;
+    }
+
+    .info-text h2 {
+        font-size: 2.4em;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .forms-panel,
+    .info-panel {
+        width: 100%;
+        height: 50%;
+        position: relative;
+        transform: none !important;
+        transition: none !important;
+        background: none;
+        padding: 0;
+    }
+
+    .info-panel {
+        order: 1;
+        display: flex;
+        padding: 20px;
+        z-index: 5;
+        color: #fff;
+        background: var(--panel-bg-dark);
+        /* Restore background */
+    }
+
+    .forms-panel {
+        order: 2;
+        z-index: 10;
+        background: var(--light-bg);
+        /* Restore background */
+    }
+
+    .form-box,
+    .info-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /* Switch to vertical transition */
+        transform: translateY(15px);
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0s 0.5s;
+        padding: 15px;
+    }
+
+    .form-box.active,
+    .info-text.active {
+        transform: translateY(0);
+        transition-delay: 0s;
+    }
+
+    /* Active means centered */
+
+    .info-text {
+        flex-direction: column;
+    }
+
+    .info-text h2 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+    }
+
+    .info-text p {
+        font-size: 0.9em;
+        max-width: 90%;
+    }
+
+    .form-content {
+        max-width: 90%;
+        width: auto;
+        padding: 20px;
+        box-shadow: none;
+        background: transparent;
+        color: var(--dark-text);
+    }
+
+    .form-content h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    .input-box {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        height: 45px;
+        font-size: 1em;
+    }
+
+    .switch-link,
+    .terms {
+        font-size: 0.85em;
+    }
+
+    .message-area {
+        min-height: 30px;
+        margin-top: 10px;
+    }
+
+    .loading-spinner {
+        margin: 10px auto;
+        width: 20px;
+        height: 20px;
+        border-width: 3px;
+    }
+
+    /* Ensure only the active one shows, others are hidden/offset */
+    .form-box:not(.active),
+    .info-text:not(.active) {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-15px);
+        /* Offset upwards when hidden */
+        pointer-events: none;
+    }
+
+    /* Remove container.active specific rules */
+    .container.active .forms-panel,
+    .container.active .info-panel {
+        transform: none !important;
+    }
+}
