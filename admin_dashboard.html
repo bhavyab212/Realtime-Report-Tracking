@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Report Management</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Link ONLY to admin dashboard styles -->
+    <link rel="stylesheet" href="admin_dashboard.css">
+</head>
+
+<body class=""> <!-- JS adds sidebar-open for mobile toggle -->
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading Admin Panel...</p>
+    </div>
+
+    <!-- Main Layout Container -->
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="admin-sidebar">
+            <div class="sidebar-header">
+                <i class='bx bxs-shield-check logo-icon'></i>
+                <span class="logo-text">Admin Panel</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <!-- Admin sections -->
+                    <li><a href="#" class="nav-link active" data-target="view-all-reports"><i
+                                class='bx bxs-spreadsheet'></i><span>All Reports</span></a></li>
+                    <li><a href="#" class="nav-link" data-target="view-admin-stats"><i
+                                class='bx bx-bar-chart-alt-2'></i><span>Statistics</span></a></li>
+                    <li><a href="#" class="nav-link" data-target="view-admin-settings"><i
+                                class='bx bxs-cog'></i><span>Settings</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class='bx bxs-user-badge user-icon'></i>
+                    <span id="admin-username-display">Administrator</span> <!-- Or load from LS if needed -->
+                </div>
+                <a href="index.html" id="admin-logout-button" class="logout-link" title="Logout">
+                    <i class='bx bx-log-out'></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1 id="main-content-title">All Reports</h1>
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="admin-mobile-menu-btn" aria-label="Toggle Admin Menu">
+                    <i class='bx bx-menu'></i>
+                </button>
+            </header>
+
+            <!-- Container for switchable views -->
+            <div class="view-container">
+
+                <!-- View 1: All Reports List -->
+                <div id="view-all-reports" class="view active-view">
+                    <div class="filters-container widget">
+                        <h3>Filter & Search Reports</h3>
+                        <div class="filter-controls">
+                            <div class="filter-group">
+                                <label for="filter-status"><i class='bx bx-filter-alt'></i> Status:</label>
+                                <select id="filter-status">
+                                    <option value="all">All Statuses</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="In Review">In Review</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="search-report"><i class='bx bx-search'></i> Search:</label>
+                                <input type="text" id="search-report" placeholder="ID, Title, Submitter...">
+                            </div>
+                            <button id="clear-filters-btn" class="btn-secondary btn-small" title="Clear Filters"><i
+                                    class='bx bx-x'></i> Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="widget table-widget">
+                        <h3>Submitted Reports (<span id="report-count">0</span>)</h3>
+                        <div class="table-wrapper"> <!-- Wrapper for scrolling -->
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Submitter</th>
+                                        <th>Date</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-reports-tbody">
+                                    <tr>
+                                        <td colspan="8" class="placeholder-cell">Loading reports...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- /#view-all-reports -->
+
+                <!-- View 2: Report Detail (Admin Version) -->
+                <div id="view-admin-report-detail" class="view report-detail-view">
+                    <button class="back-to-list-btn" id="back-to-admin-reports-btn" title="Back to All Reports"><i
+                            class='bx bx-list-ul'></i> Back to All Reports</button>
+                    <div id="admin-report-detail-content">
+                        <p class="placeholder-cell">Select a report to view details.</p>
+                        <!-- Content populated by JS -->
+                    </div>
+                </div><!-- /#view-admin-report-detail -->
+
+                <!-- View 3: Statistics -->
+                <div id="view-admin-stats" class="view">
+                    <h2>Statistics Overview</h2>
+                    <p>Summary of report data.</p>
+                    <div class="widget-row">
+                        <div class="widget chart-widget">
+                            <h3>Reports by Category</h3>
+                            <div class="chart-placeholder"><canvas id="adminCategoryChart"></canvas></div>
+                        </div>
+                        <div class="widget chart-widget">
+                            <h3>Reports Over Time</h3>
+                            <div class="chart-placeholder"><canvas id="adminTimeChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="widget-row">
+                        <div class="widget table-widget">
+                            <h3>Status Counts</h3>
+                            <table id="admin-stats-table">
+                                <tbody>
+                                    <tr>
+                                        <td>Loading stats...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- /#view-admin-stats -->
+
+                <!-- View 4: Settings -->
+                <div id="view-admin-settings" class="view">
+                    <h2>Admin Settings</h2>
+                    <div class="widget">
+                        <h3>Data Management</h3>
+                        <p>Citizen reports are stored locally in this browser's localStorage.</p>
+                        <button class="btn-danger" id="admin-clear-all-reports-btn"> <i class='bx bxs-trash-alt'></i>
+                            Clear ALL Citizen Reports (Use with Caution)</button>
+                    </div>
+                    <div class="widget">
+                        <h3>Admin Account</h3>
+                        <p>Admin login is currently handled via hardcoded values in the script.</p>
+                        <button class="btn-secondary disabled" title="Feature requires backend">Manage Admins</button>
+                    </div>
+                </div><!-- /#view-admin-settings -->
+
+            </div> <!-- /.view-container -->
+        </main> <!-- /.main-content -->
+    </div> <!-- /.dashboard-layout -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="admin_dashboard.js"></script>
+</body>
+
+</html>
