@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - Expanded Categories</title>
+    <title>User Dashboard</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Link ONLY to dashboard styles -->
     <link rel="stylesheet" href="dashboard.css">
 </head>
 
-<body class=""> <!-- JS adds sidebar-open for mobile toggle -->
+<body class=""> <!-- JS adds .sidebar-open for mobile toggle and .dark-theme -->
 
     <!-- Loading Overlay -->
     <div id="loading-overlay" class="loading-overlay">
@@ -17,7 +18,7 @@
         <p>Loading...</p>
     </div>
 
-    <!-- Main Layout -->
+    <!-- Main Layout Container -->
     <div class="dashboard-layout">
 
         <!-- Sidebar -->
@@ -28,7 +29,7 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <!-- Basic Links with data-target -->
+                    <!-- Ensure data-target matches view IDs -->
                     <li><a href="#" class="nav-link active" data-target="view-dashboard"><i
                                 class='bx bxs-grid-alt'></i><span>Dashboard</span></a></li>
                     <li><a href="#" class="nav-link" data-target="view-reports"><i class='bx bxs-report'></i><span>My
@@ -55,6 +56,12 @@
         <main class="main-content">
             <header class="main-header">
                 <h1 id="main-content-title">Dashboard Overview</h1>
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme">
+                    <i class='bx bx-sun'></i> <!-- Default: Sun icon for Light mode -->
+                    <i class='bx bx-moon'></i> <!-- Moon icon for Dark mode -->
+                </button>
+                <!-- Mobile Menu Toggle -->
                 <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
                     <i class='bx bx-menu'></i>
                 </button>
@@ -63,7 +70,7 @@
             <!-- Container for all switchable views -->
             <div class="view-container">
 
-                <!-- View 1: Dashboard -->
+                <!-- === View 1: Dashboard === -->
                 <div id="view-dashboard" class="view active-view">
                     <section class="report-cta">
                         <button id="report-issue-btn" class="btn-report">
@@ -102,8 +109,11 @@
                                 <p>Based on pending vs closed reports.</p>
                             </div>
                             <div class="widget chart-widget">
-                                <h3>Recent Activity (Placeholder)</h3>
-                                <div class="chart-placeholder"> <canvas id="activityChart"></canvas> </div>
+                                <h3>Report Status Overview</h3> <!-- Specific Title -->
+                                <div class="chart-placeholder">
+                                    <!-- Canvas for the dashboard status chart -->
+                                    <canvas id="activityChart"></canvas>
+                                </div>
                             </div>
                         </div>
                         <!-- Row 3: Recent Reports Table -->
@@ -121,7 +131,7 @@
                                     </thead>
                                     <tbody id="recent-reports-tbody">
                                         <tr>
-                                            <td colspan="4">Loading...</td>
+                                            <td colspan="4" class="placeholder-cell">Loading...</td>
                                         </tr>
                                     </tbody>
                                 </table> <a href="#" class="view-all-reports-link nav-link"
@@ -131,28 +141,28 @@
                     </section>
                 </div><!-- /#view-dashboard -->
 
-                <!-- View 2: Reports List -->
+                <!-- === View 2: Reports List === -->
                 <div id="view-reports" class="view">
                     <h2>My Reports History</h2>
-                    <p>All your submitted reports are listed below. Click for details.</p>
+                    <p>All your submitted reports are listed below. Click on a report card for details.</p>
                     <div class="report-list-container" id="report-list-container">
-                        <p>Loading reports...</p>
+                        <p class="placeholder-cell">Loading reports...</p>
                     </div>
                 </div><!-- /#view-reports -->
 
-                <!-- View 3: Progress -->
+                <!-- === View 3: Progress === -->
                 <div id="view-progress" class="view">
                     <h2>Progress Overview</h2>
                     <p>Visualize the status and types of your submitted reports.</p>
                     <div id="progress-view-content" class="dashboard-widgets">
-                        <p>Loading progress data...</p>
+                        <p class="placeholder-cell">Loading progress data...</p>
                     </div>
                 </div><!-- /#view-progress -->
 
-                <!-- View 4: Settings -->
+                <!-- === View 4: Settings === -->
                 <div id="view-settings" class="view">
                     <h2>Settings</h2>
-                    <p>Manage your account preferences.</p>
+                    <p>Manage your account preferences and local data.</p>
                     <div class="widget">
                         <h3>Profile Information</h3>
                         <p>Username: <strong id="settings-username">User</strong></p> <button
@@ -165,7 +175,7 @@
                     </div>
                 </div><!-- /#view-settings -->
 
-                <!-- View 5: Report Issue -->
+                <!-- === View 5: Report Issue === -->
                 <div id="view-report-issue" class="view report-issue-view">
                     <button class="back-to-dash-btn" id="back-to-dash-btn" title="Back to Dashboard"><i
                             class='bx bx-arrow-back'></i> Back</button>
@@ -173,12 +183,10 @@
                     <div class="report-steps-container">
                         <!-- Step 1: Category -->
                         <div id="report-step-1" class="report-step active-step">
-                            <p class="step-instruction"><i class='bx bx-category-alt'></i> Choose the category related
-                                to your problem:</p>
+                            <p class="step-instruction"><i class='bx bx-category-alt'></i> Choose the category most
+                                related to your problem:</p>
                             <div class="category-selection">
-                                <!-- Level 1 Grid -->
                                 <div class="category-grid main-categories active-category-level">
-                                    <!-- Note: data-subsubcategories is added where level 3 exists -->
                                     <button class="category-card" data-category="Infrastructure"
                                         data-subcategories='{"Roads & Streets": {"Potholes": [], "Cracked Pavement": [], "Faded Markings": [], "Street Cleaning":[]}, "Sidewalks": ["Cracked", "Uneven", "Obstruction"], "Streetlights": ["Outage", "Flickering", "Damaged Pole"], "Drainage": ["Blocked Drain", "Flooding", "Culvert Issue"], "Public Buildings": ["Maintenance Needed", "Accessibility Issue", "Damage Report"]}'
                                         style="--card-color: #3498db;"><i
@@ -219,13 +227,10 @@
                                         style="--card-color: #7f8c8d;"><i
                                             class='bx bx-dots-horizontal-rounded'></i><span>Other</span></button>
                                 </div>
-                                <!-- Level 2 Grid -->
-                                <div class="category-grid sub-categories level-2" style="display: none;"></div>
-                                <!-- Level 3 Grid -->
-                                <div class="category-grid sub-categories level-3" style="display: none;"></div>
+                                <div class="category-grid sub-categories level-2"></div>
+                                <div class="category-grid sub-categories level-3"></div>
                             </div>
                         </div><!-- /#report-step-1 -->
-
                         <!-- Step 2: Details -->
                         <div id="report-step-2" class="report-step">
                             <button class="step-back-btn" data-target-step="1"><i class='bx bx-chevron-left'></i>
@@ -282,17 +287,17 @@
                     </div> <!-- /.report-steps-container -->
                 </div><!-- /#view-report-issue -->
 
-                <!-- View 6: Report Detail -->
+                <!-- === View 6: Report Detail === -->
                 <div id="view-report-detail" class="view report-detail-view">
                     <button class="back-to-reports-btn" id="back-to-reports-btn"><i class='bx bx-list-ul'></i> Back to
-                        Reports List</button>
+                        Reports</button>
                     <div id="report-detail-content">
-                        <p>Loading report details...</p>
+                        <p class="placeholder-cell">Loading report details...</p>
                     </div>
                 </div><!-- /#view-report-detail -->
 
             </div> <!-- /.view-container -->
-        </main>
+        </main> <!-- /.main-content -->
     </div> <!-- /.dashboard-layout -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
