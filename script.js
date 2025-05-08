@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
           showMessage(successId, result.message || 'Admin login successful! Redirecting...');
           setTimeout(() => {
             localStorage.setItem('loggedInUser', result.username || 'Administrator');
-            window.location.href = 'dashboard.html';
+            window.location.href = 'admin_dashboard.html';
           }, 1000);
         } else {
           showMessage(errorId, result.message || `Admin login failed (Status: ${response.status})`, false);
@@ -283,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   } else { console.error("Admin Login Button or Spinner not found!"); }
-
 
   // --- Initial Setup ---
   // Load user data FIRST, then set the initial view
