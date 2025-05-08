@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const LS_REPORTS_KEY = 'dashboard_userReports';
     const LS_STATS_KEY = 'dashboard_userStats';
     const LS_USERNAME_KEY = 'loggedInUser';
+    const LS_THEME_KEY = 'dashboard_theme';
 
     // --- DOM Element References ---
     const sidebarLinks = document.querySelectorAll('.sidebar-nav .nav-link');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const body = document.body;
     const loadingOverlay = document.getElementById('loading-overlay');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
     // Report Issue View Elements
     const reportIssueView = document.getElementById('view-report-issue');
     const reportStepTitle = document.getElementById('report-step-title');
@@ -166,7 +168,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- LOCAL STORAGE FUNCTIONS & DATA MANAGEMENT ---
+
+
+
+
+
+
+
+
+
+
+    // --- Theme Toggle Functionality ---
+    function initThemeToggle() {
+        // Check for saved theme preference or use default
+        const savedTheme = localStorage.getItem(LS_THEME_KEY);
+
+        // Apply saved theme or default
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-theme');
+        }
+
+        // Update button appearance based on current theme
+        updateThemeToggleButton();
+
+        // Add click event listener to toggle theme
+        themeToggleBtn.addEventListener('click', () => {
+            // Toggle dark-theme class on body
+            body.classList.toggle('dark-theme');
+
+            // Save preference to localStorage
+            const isDarkMode = body.classList.contains('dark-theme');
+            localStorage.setItem(LS_THEME_KEY, isDarkMode ? 'dark' : 'light');
+
+            // Update button appearance
+            updateThemeToggleButton();
+        });
+    }
+
+    // Helper function to update button appearance based on current theme
+    function updateThemeToggleButton() {
+        const isDarkMode = body.classList.contains('dark-theme');
+
+        // Update button title
+        themeToggleBtn.title = isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme';
+
+        // Add/remove active class to style the button differently if needed
+        themeToggleBtn.classList.toggle('dark-active', isDarkMode);
+    }
+
+    // Call this function in your initialization code
+    initThemeToggle();
+    initThemeToggle();    // --- LOCAL STORAGE FUNCTIONS & DATA MANAGEMENT ---
     function loadReports() { try { const d = localStorage.getItem(LS_REPORTS_KEY); return d ? JSON.parse(d) : []; } catch (e) { console.error("LS Load Reports Error:", e); return []; } }
     function saveReports(reports) { try { localStorage.setItem(LS_REPORTS_KEY, JSON.stringify(reports)); console.log("Reports saved"); } catch (e) { console.error("LS Save Reports Error:", e); } }
     function loadStats() { const dS = { tasksCompleted: 0, pendingRequests: 0, unreadMessages: 0, overallProgress: 0 }; try { const d = localStorage.getItem(LS_STATS_KEY); return d ? { ...dS, ...JSON.parse(d) } : dS; } catch (e) { console.error("LS Load Stats Error:", e); return dS; } }
