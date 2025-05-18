@@ -106,45 +106,66 @@
 
 ## 📸 Screenshots
 
-Here's a glimpse of the "Janvani" platform:
-
-### Login & Registration
-<p align="center">
-  <img src="./Project_images/Janvani/Login_page/citizen_login.png" alt="Citizen Login Page" width="45%">
-  <img src="./Project_images/Janvani/Login_page/citizen_registration.png" alt="Citizen Registration Page" width="45%">
-  <br>
-  <img src="./Project_images/Janvani/Login_page/admin_login.png" alt="Admin Login Page" width="45%">
-</p>
-*Caption: Secure and distinct login/registration flows for citizens and administrators.*
+Here's a glimpse of the "Janvani" platform, showcasing its key user interfaces:
 
 ---
 
-### Citizen Dashboard & Reporting
-<p align="center">
-  <img src="./Project_images/Janvani/Citizen_dashboard/dashboard.png" alt="Citizen Dashboard Overview" width="30%">
-  <img src="./Project_images/Janvani/Citizen_dashboard/reports.png" alt="Citizen My Reports List" width="30%">
- 
-  <br>
-  <img src="./Project_images/Janvani/Citizen_dashboard/select_catagory .png" alt="Report Issue - Category Selection" width="30%">
-  <img src="./Project_images/Janvani/Citizen_dashboard/select_subcat1.png" alt="Report Issue - Subcategory Selection 1" width="30%">
-  <img src="./Project_images/Janvani/Citizen_dashboard/select_subcat2.png" alt="Report Issue - Subcategory Selection 2" width="30%">
-  <br>
-  <img src="./Project_images/Janvani/Citizen_dashboard/submit_report.png" alt="Report Issue - Details Form" width="30%">
-  <img src="./Project_images/Janvani/Citizen_dashboard/progress.png" alt="Citizen Progress View" width="30%">
-  <img src="./Project_images/Janvani/Citizen_dashboard/report_status.png" alt="Citizen Report Status Example" width="30%">
-</p>
-*Caption: Citizens have a personalized dashboard to report issues through a guided multi-level category selection, upload evidence, specify location, and track the status of their submissions.*
+### 🔑 Login & Registration
+
+Secure and distinct login/registration flows for citizens and administrators.
+
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Login_page/citizen_login.png" alt="Citizen Login Page" width="90%"><br><sub>Citizen Login</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Login_page/citizen_registration.png" alt="Citizen Registration Page" width="90%"><br><sub>Citizen Registration</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Login_page/admin_login.png" alt="Admin Login Page" width="90%"><br><sub>Admin Login</sub></td>
+  </tr>
+</table>
 
 ---
 
-### Admin Dashboard
-<p align="center">
-  <img src="./Project_images/Janvani/Admin_dashboard/dashboard.png" alt="Admin All Reports View" width="45%"> <!-- Assumed filename -->
-  <img src="./Project_images/Janvani/Admin_dashboard/report_details.png" alt="Admin Report Detail with Status Update" width="45%"> <!-- Assumed filename -->
-  <br>
-  <img src="./Project_images/Janvani/Admin_dashboard/statistcs.png" alt="Admin Statistics View" width="45%">
-</p>
-*Caption: Administrators have a comprehensive panel to view all citizen reports, filter them, inspect details, update statuses, and view overall statistics.*
+###  citiz️ Citizen Dashboard & Reporting
+
+Citizens have a personalized dashboard to report issues through a guided multi-level category selection, upload evidence, specify location, and track the status of their submissions.
+
+**Dashboard & Report Tracking:**
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/dashboard.png" alt="Citizen Dashboard Overview" width="90%"><br><sub>Dashboard Overview</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/reports.png" alt="Citizen My Reports List" width="90%"><br><sub>My Reports List</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/report_status.png" alt="Citizen Report Status Example" width="90%"><br><sub>Report Status</sub></td>
+  </tr>
+</table>
+
+**Issue Reporting Flow:**
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/select_catagory .png" alt="Report Issue - Category Selection" width="90%"><br><sub>Select Main Category</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/select_subcat1.png" alt="Report Issue - Subcategory Selection 1" width="90%"><br><sub>Select Subcategory 1</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/select_subcat2.png" alt="Report Issue - Subcategory Selection 2" width="90%"><br><sub>Select Subcategory 2</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/submit_report.png" alt="Report Issue - Details Form" width="90%"><br><sub>Submit Report Details</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Citizen_dashboard/progress.png" alt="Citizen Progress View" width="90%"><br><sub>Progress View</sub></td>
+    <td align="center" width="33%"></td> <!-- Empty cell for alignment if needed -->
+  </tr>
+</table>
+
+---
+
+### 🛡️ Admin Dashboard
+
+Administrators have a comprehensive panel to view all citizen reports, filter them, inspect details, update statuses, and view overall statistics.
+
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Admin_dashboard/dashboard.png" alt="Admin All Reports View" width="90%"><br><sub>All Reports View</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Admin_dashboard/report_details.png" alt="Admin Report Detail with Status Update" width="90%"><br><sub>Report Detail & Status</sub></td>
+    <td align="center" width="33%"><img src="./Project_images/Janvani/Admin_dashboard/statistcs.png" alt="Admin Statistics View" width="90%"><br><sub>Statistics Overview</sub></td>
+  </tr>
+</table>
+
+---
 
 ##  Future Development
 
