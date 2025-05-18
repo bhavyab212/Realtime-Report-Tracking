@@ -110,10 +110,10 @@ Here's a glimpse of the "Janvani" platform:
 
 ### Login & Registration
 <p align="center">
-  <img src=".Project_images/Janvani/Login_page/login_citizen.png" alt="Citizen Login Page" width="45%">
-  <img src=".Project_images/Janvani/Login_page/login_registration.png" alt="Citizen Registration Page" width="45%">
+  <img src="./Project_images/Janvani/Login_page/citizen_login.png" alt="Citizen Login Page" width="45%">
+  <img src="./Project_images/Janvani/Login_page/citizen_registration.png" alt="Citizen Registration Page" width="45%">
   <br>
-  <img src=".Project_images/Janvani/Login_page/login_admin.png" alt="Admin Login Page" width="45%">
+  <img src="./Project_images/Janvani/Login_page/admin_login.png" alt="Admin Login Page" width="45%">
 </p>
 *Caption: Secure and distinct login/registration flows for citizens and administrators.*
 
@@ -121,16 +121,17 @@ Here's a glimpse of the "Janvani" platform:
 
 ### Citizen Dashboard & Reporting
 <p align="center">
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_main.png" alt="Citizen Dashboard Overview" width="30%">
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_reports_list.png" alt="Citizen My Reports List" width="30%">
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_report_detail.png" alt="Citizen Report Detail View" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/dashboard.png" alt="Citizen Dashboard Overview" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/reports.png" alt="Citizen My Reports List" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/report_details.png" alt="Citizen Report Detail View" width="30%">
   <br>
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_select_category.png" alt="Report Issue - Category Selection" width="30%">
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_select_subcategory1.png" alt="Report Issue - Subcategory Selection" width="30%">
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_submit_report_form.png" alt="Report Issue - Details Form" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/select_catagory.png" alt="Report Issue - Category Selection" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/select_subcat1.png" alt="Report Issue - Subcategory Selection 1" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/select_subcat2.png" alt="Report Issue - Subcategory Selection 2" width="30%">
   <br>
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_progress.png" alt="Citizen Progress View" width="30%">
-  <img src=".Project_images/Janvani/Citizen_dashboard/citizen_dashboard_report_status.png" alt="Citizen Report Status Example" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/submit_report.png" alt="Report Issue - Details Form" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/progress.png" alt="Citizen Progress View" width="30%">
+  <img src="./Project_images/Janvani/Citizen_Dashboard/report_status.png" alt="Citizen Report Status Example" width="30%">
 </p>
 *Caption: Citizens have a personalized dashboard to report issues through a guided multi-level category selection, upload evidence, specify location, and track the status of their submissions.*
 
@@ -138,12 +139,12 @@ Here's a glimpse of the "Janvani" platform:
 
 ### Admin Dashboard
 <p align="center">
-  <img src=".Project_images/Janvani/Admin_dashboard/admin_dashboard_all_reports.png" alt="Admin All Reports View" width="45%">
-  <img src=".Project_images/Janvani/Admin_dashboard/admin_dashboard_report_detail_status.png" alt="Admin Report Detail with Status Update" width="45%">
+  <img src="./Project_images/Janvani/Admin_Dashboard/admin_all_reports.png" alt="Admin All Reports View" width="45%"> <!-- Assumed filename -->
+  <img src="./Project_images/Janvani/Admin_Dashboard/admin_report_detail.png" alt="Admin Report Detail with Status Update" width="45%"> <!-- Assumed filename -->
   <br>
-  <img src=".Project_images/Janvani/Admin_dashboard/admin_dashboard_statistics.png" alt="Admin Statistics View (Placeholder)" width="45%">
+  <img src="./Project_images/Janvani/Admin_Dashboard/statistics.png" alt="Admin Statistics View" width="45%">
 </p>
-*Caption: Administrators have a comprehensive panel to view all citizen reports, filter them, inspect details, update statuses, and (in future) view overall statistics.*
+*Caption: Administrators have a comprehensive panel to view all citizen reports, filter them, inspect details, update statuses, and view overall statistics.*
 
 ##  Future Development
 
