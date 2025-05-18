@@ -241,6 +241,228 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateReportId() { return `RPT-${Date.now().toString().slice(-6)}-${Math.random().toString(36).substring(2, 6)}`; }
 
     // --- RENDER/DISPLAY FUNCTIONS ---
+    // --- Chart Initialization ---
+    function initDashboardCharts() {
+        // Initialize the existing activity chart
+        const activityChartCtx = document.getElementById('activityChart');
+        if (activityChartCtx && typeof Chart !== 'undefined') {
+            try {
+                new Chart(activityChartCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pending', 'In Review', 'Completed'],
+                        datasets: [{
+                            label: 'Report Status',
+                            data: [
+                                userReports.filter(r => r.status === 'Pending').length,
+                                userReports.filter(r => r.status === 'In Review').length,
+                                userReports.filter(r => r.status === 'Completed').length
+                            ],
+                            backgroundColor: [
+                                'rgba(255, 193, 7, 0.7)',
+                                'rgba(13, 110, 253, 0.7)',
+                                'rgba(25, 135, 84, 0.7)'
+                            ],
+                            borderColor: [
+                                '#ffc107',
+                                '#0d6efd',
+                                '#198754'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary')
+                                }
+                            },
+                            title: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Chart error:", error);
+            }
+        }
+
+        // Initialize the new categories chart
+        const categoriesChartCtx = document.getElementById('categoriesChart');
+        if (categoriesChartCtx && typeof Chart !== 'undefined') {
+            try {
+                // Count reports by main category
+                const categoryData = {};
+                userReports.forEach(report => {
+                    const mainCategory = report.category_path.split(' > ')[0];
+                    if (mainCategory) {
+                        categoryData[mainCategory] = (categoryData[mainCategory] || 0) + 1;
+                    }
+                });
+
+                // Prepare data for chart
+                const labels = Object.keys(categoryData);
+                const data = Object.values(categoryData);
+
+                // Generate colors based on number of categories
+                const colors = [
+                    'rgba(83, 52, 131, 0.7)',    // Primary color
+                    'rgba(112, 111, 211, 0.7)',   // Secondary color
+                    'rgba(26, 26, 46, 0.7)',      // Dark color
+                    'rgba(16, 185, 129, 0.7)',    // Success color
+                    'rgba(239, 68, 68, 0.7)',     // Error color
+                    'rgba(245, 158, 11, 0.7)',    // Warning color
+                    'rgba(59, 130, 246, 0.7)',    // Info color
+                    'rgba(139, 92, 246, 0.7)',    // Purple
+                    'rgba(236, 72, 153, 0.7)',    // Pink
+                    'rgba(6, 182, 212, 0.7)'      // Cyan
+                ];
+
+                new Chart(categoriesChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Reports by Category',
+                            data: data,
+                            backgroundColor: labels.map((_, i) => colors[i % colors.length]),
+                            borderColor: labels.map((_, i) => colors[i % colors.length].replace('0.7', '1')),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',  // Horizontal bar chart
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `Reports: ${context.raw}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0,
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary')
+                                },
+                                grid: {
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--border-color')
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary')
+                                },
+                                grid: {
+                                    color: getComputedStyle(document.documentElement).getPropertyValue('--border-color')
+                                }
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Categories chart error:", error);
+            }
+        }
+
+        // --- NEW: Solved vs Unsolved Pie Chart ---
+        // assume you store all reports in localStorage under 'reports'
+        const allReports = JSON.parse(localStorage.getItem('reports') || '[]');
+        const solvedCount = allReports.filter(r => r.status.toLowerCase() === 'completed').length;
+        const unsolvedCount = allReports.length - solvedCount;
+
+        const ctx2 = document.getElementById('resolvedChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Solved', 'Unsolved'],
+                datasets: [{
+                    data: [solvedCount, unsolvedCount],
+                    backgroundColor: [
+                        getComputedStyle(document.documentElement).getPropertyValue('--status-completed').trim() || '#198754',
+                        getComputedStyle(document.documentElement).getPropertyValue('--status-pending').trim() || '#ffc107'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `${ctx.label}: ${ctx.parsed} (${((ctx.parsed / allReports.length) * 100).toFixed(1)}%)`
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function initUserActivityChart() {
+        const ctx = document.getElementById('userActivityChart');
+        if (!ctx) return;
+
+        // Load all reports from localStorage (or wherever you keep them)
+        const reports = JSON.parse(localStorage.getItem('reports') || '[]');
+
+        // Group by date string
+        const countsByDate = reports.reduce((acc, r) => {
+            const dateKey = new Date(r.submittedAt).toLocaleDateString();
+            acc[dateKey] = (acc[dateKey] || 0) + 1;
+            return acc;
+        }, {});
+
+        // Sort dates ascending
+        const labels = Object.keys(countsByDate)
+            .sort((a, b) => new Date(a) - new Date(b));
+
+        const data = labels.map(d => countsByDate[d]);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Reports Submitted',
+                    data,
+                    borderColor: getComputedStyle(document.documentElement)
+                        .getPropertyValue('--secondary-color').trim(),
+                    backgroundColor: 'rgba(112, 111, 211, 0.3)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Date' },
+                        ticks: { maxRotation: 0, autoSkip: true }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Number of Reports' }
+                    }
+                }
+            }
+        });
+    }
+
+    // Call chart initialization when dashboard is updated
     function updateDashboardDisplay() {
         console.log("Updating dashboard display, Stats:", dashboardStats);
         if (tasksDoneWidgetValue) tasksDoneWidgetValue.textContent = dashboardStats.tasksCompleted ?? 0; // Use nullish coalescing
@@ -253,6 +475,9 @@ document.addEventListener('DOMContentLoaded', () => {
             progressBar.classList.toggle('low-progress', progress < 30);
         }
         renderRecentReportsTable();
+
+        // Initialize charts after updating data
+        initDashboardCharts();
     }
 
     function renderRecentReportsTable() {
@@ -579,6 +804,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (reportSubmitFeedback) { showMessage('report-submit-feedback', `Report Submitted! (ID: ${newReport.id})`, true); }
             else { alert(`Report submitted (ID: ${newReport.id})!`); }
 
+            // Create and show submission animation
+            showSubmissionAnimation(newReport.id);
+
             reportDetailsForm.reset(); // Reset form
             if (filePreviewList) filePreviewList.textContent = 'No files selected.';
             if (locationStatus) { locationStatus.textContent = ''; locationStatus.className = 'location-feedback'; }
@@ -591,9 +819,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (dashboardLink) { sidebarLinks.forEach(l => l.classList.remove('active')); dashboardLink.classList.add('active'); }
                 showView('view-dashboard');
                 if (submitButton) submitButton.disabled = false; // Re-enable after navigation
-            }, 2500); // Delay before going back
+            }, 3000); // Increased delay to allow animation to be seen
         });
     } else { console.error("Report Details Form not found!"); }
+
+    // Add this new function to show the submission animation
+    function showSubmissionAnimation(reportId) {
+        // Create animation container
+        const animationContainer = document.createElement('div');
+        animationContainer.className = 'submission-animation-container';
+
+        // Create animation content
+        animationContainer.innerHTML = `
+            <div class="submission-animation">
+                <i class='bx bx-check-circle success-icon'></i>
+                <h3>Report Submitted Successfully!</h3>
+                <p>Your report has been received and will be processed.</p>
+                <p>Report ID: <span class="report-id">${reportId}</span></p>
+                <p>Thank you for your contribution to our community.</p>
+            </div>
+        `;
+
+        // Add to body
+        document.body.appendChild(animationContainer);
+
+        // Remove after animation completes
+        setTimeout(() => {
+            animationContainer.style.opacity = '0';
+            animationContainer.style.transition = 'opacity 0.5s ease';
+
+            setTimeout(() => {
+                document.body.removeChild(animationContainer);
+            }, 500);
+        }, 2500);
+    }
 
     // Report Row/Card Click Handling (Event Delegation)
     function handleReportClick(event) {
