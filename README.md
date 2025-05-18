@@ -123,7 +123,7 @@ Here's a glimpse of the "Janvani" platform:
 <p align="center">
   <img src="./Project_images/Janvani/Citizen_dashboard/dashboard.png" alt="Citizen Dashboard Overview" width="30%">
   <img src="./Project_images/Janvani/Citizen_dashboard/reports.png" alt="Citizen My Reports List" width="30%">
-  <img src="./Project_images/Janvani/Citizen_dashboard/report_details.png" alt="Citizen Report Detail View" width="30%">
+ 
   <br>
   <img src="./Project_images/Janvani/Citizen_dashboard/select_catagory .png" alt="Report Issue - Category Selection" width="30%">
   <img src="./Project_images/Janvani/Citizen_dashboard/select_subcat1.png" alt="Report Issue - Subcategory Selection 1" width="30%">
