@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Row 2: Progress & Chart -->
+                        <!-- Row 2: Progress & Charts -->
                         <div class="widget-row">
                             <div class="widget progress-widget">
                                 <h3>Overall Report Progress</h3>
@@ -108,11 +108,22 @@
                                 </div>
                                 <p>Based on pending vs closed reports.</p>
                             </div>
+
+                            <!-- === REMOVED old status doughnut === -->
+                            <!--
                             <div class="widget chart-widget">
-                                <h3>Report Status Overview</h3> <!-- Specific Title -->
+                                <h3>Report Status Overview</h3>
                                 <div class="chart-placeholder">
-                                    <!-- Canvas for the dashboard status chart -->
                                     <canvas id="activityChart"></canvas>
+                                </div>
+                            </div>
+                            -->
+
+                            <!-- === NEW: User Activity Over Time Line Chart === -->
+                            <div class="widget chart-widget">
+                                <h3>Reports by Category</h3>
+                                <div class="chart-placeholder">
+                                    <canvas id="categoriesChart"></canvas>
                                 </div>
                             </div>
                         </div>
